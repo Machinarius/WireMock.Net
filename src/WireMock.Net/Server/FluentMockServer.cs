@@ -17,7 +17,7 @@ namespace WireMock.Server
     /// <summary>
     /// The fluent mock server.
     /// </summary>
-    public partial class FluentMockServer : IDisposable
+    public partial class FluentMockServer : IDisposable, IWireMockHost
     {
         private readonly IOwinSelfHost _httpServer;
         private readonly object _syncRoot = new object();
