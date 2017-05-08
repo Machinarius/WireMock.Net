@@ -5,7 +5,7 @@ using WireMock.Matchers;
 
 namespace WireMock.Owin
 {
-    internal class WireMockMiddlewareOptions
+    public class WireMockMiddlewareOptions
     {
         public TimeSpan? RequestProcessingDelay { get; set; }
 

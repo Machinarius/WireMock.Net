@@ -13,9 +13,9 @@ using Microsoft.AspNetCore.Http;
 namespace WireMock.Owin
 {
 #if NET45
-    internal class WireMockMiddleware : OwinMiddleware
+    public class WireMockMiddleware : OwinMiddleware
 #else
-    internal class WireMockMiddleware
+    public class WireMockMiddleware
 #endif
     {
         private static readonly Task CompletedTask = Task.FromResult(false);

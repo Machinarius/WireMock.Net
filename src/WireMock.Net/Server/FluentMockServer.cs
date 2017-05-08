@@ -151,6 +151,28 @@ namespace WireMock.Server
             });
         }
 
+        /// <summary>
+        /// Starts a server with a supplied Middleware options object,
+        /// intended for embedding the Fluent Mock Server into another 
+        /// OWIN-enabled Web app/IIS project
+        /// </summary>
+        /// <remarks>This is intended to be used only once for each OWIN context you have</remarks>
+        /// <param name="options">The Middleware options object</param>
+        /// <param name="withAdminApi">Whether to register the admin API or not</param>
+        /// <param name="readStaticMappings">Whether to read the static mappings or not</param>
+        /// <returns>The Fluent Mock Server object, working as usual</returns>
+        [PublicAPI]
+        public static FluentMockServer StartWithHostedMiddlewareOptions(WireMockMiddlewareOptions options, 
+            bool withAdminApi, bool readStaticMappings)
+        {
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
+            return new FluentMockServer(options, withAdminApi, readStaticMappings);
+        }
+
         private FluentMockServer(FluentMockServerSettings settings)
         {
             if (settings.Urls != null)
@@ -178,6 +200,21 @@ namespace WireMock.Server
             }
 
             if (settings.ReadStaticMappings == true)
+            {
+                ReadStaticMappings();
+            }
+        }
+
+        private FluentMockServer(WireMockMiddlewareOptions options, bool withAdminApi, bool readStaticMappings)
+        {
+            _options = options;
+
+            if (withAdminApi)
+            {
+                InitAdmin();
+            }
+
+            if (readStaticMappings)
             {
                 ReadStaticMappings();
             }
